@@ -1,0 +1,29 @@
+server:
+  port: 9999
+  servlet:
+    context-path: /blog-server
+  max-http-header-size: 104857600
+  tomcat:
+    max-http-post-size: 104857600
+    uri-encoding: utf-8
+spring:
+  profiles:
+    active: dev
+  application:
+    name: blog-server
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: error
+    com.zy.blog.server.mapper: debug
+
+mapper:
+  mappers: com.zy.blog.server.core.MyMapper
+  not-empty: false
+  identity: MYSQL
