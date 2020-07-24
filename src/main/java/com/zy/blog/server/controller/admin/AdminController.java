@@ -84,7 +84,7 @@ public class AdminController {
         if(user==null) {
             map.put("code",0);
             map.put("msg","用户名无效！");
-        } else if(!user.getUserPass().equals(password)) {
+        } else if(!user.getPassword().equals(password)) {
             map.put("code",0);
             map.put("msg","密码错误！");
         } else {

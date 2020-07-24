@@ -11,10 +11,10 @@ public class User {
     private Integer userId;
 
     @Column(name = "user_name")
-    private String userName;
+    private String username;
 
     @Column(name = "user_pass")
-    private String userPass;
+    private String password;
 
     @Column(name = "user_nickname")
     private String userNickname;
@@ -39,6 +39,27 @@ public class User {
 
     @Column(name = "user_status")
     private Integer userStatus;
+
+    private boolean enable;
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
+
+    private String roles;
+
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
 
     /**
      * 文章数量（不是数据库字段）
@@ -68,32 +89,20 @@ public class User {
         this.userId = userId;
     }
 
-    /**
-     * @return user_name
-     */
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    /**
-     * @param userName
-     */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    /**
-     * @return user_pass
-     */
-    public String getUserPass() {
-        return userPass;
+    public String getPassword() {
+        return password;
     }
 
-    /**
-     * @param userPass
-     */
-    public void setUserPass(String userPass) {
-        this.userPass = userPass;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

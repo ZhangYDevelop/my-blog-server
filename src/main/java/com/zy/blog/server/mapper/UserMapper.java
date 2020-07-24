@@ -1,5 +1,6 @@
 package com.zy.blog.server.mapper;
 
+import com.zy.blog.server.conf.support.MyUserDetails;
 import com.zy.blog.server.entity.User;
 import tk.mybatis.mapper.common.Mapper;
 
@@ -74,5 +75,7 @@ public interface UserMapper extends Mapper<User> {
      * @return 用户
      */
     User getUserByEmail(String email) ;
+
+    MyUserDetails getUserByNameEx(String name) ;
 
 }

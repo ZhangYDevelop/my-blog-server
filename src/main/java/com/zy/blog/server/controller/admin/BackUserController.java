@@ -122,7 +122,7 @@ public class BackUserController {
      */
     @RequestMapping(value = "/insertSubmit",method = RequestMethod.POST)
     public String insertUserSubmit(User user)  {
-        User user2 = userService.getUserByName(user.getUserName());
+        User user2 = userService.getUserByName(user.getUsername());
         User user3 = userService.getUserByEmail(user.getUserEmail());
         if(user2==null&&user3==null) {
             user.setUserRegisterTime(new Date());
