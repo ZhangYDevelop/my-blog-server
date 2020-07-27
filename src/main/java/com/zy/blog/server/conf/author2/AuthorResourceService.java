@@ -18,11 +18,15 @@ public class AuthorResourceService extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers("/oauth/**", "/api/logout").permitAll()
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/user/login").permitAll()
+                .antMatchers("/home/**" +
+                        "").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin();
     }

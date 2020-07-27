@@ -74,7 +74,7 @@ public class BackUserController {
         int id = Integer.valueOf(request.getParameter("id"));
         //用户名已存在,但不是当前用户(编辑用户的时候，不提示)
         if(user!=null) {
-            if(user.getUserId()!=id) {
+            if(user.getId()!=id) {
                 map.put("code", 1);
                 map.put("msg", "用户名已存在！");
             }
@@ -101,7 +101,7 @@ public class BackUserController {
         int id = Integer.valueOf(request.getParameter("id"));
         //用户名已存在,但不是当前用户(编辑用户的时候，不提示)
         if(user!=null) {
-            if(user.getUserId()!=id) {
+            if(user.getId()!=id) {
                 map.put("code", 1);
                 map.put("msg", "电子邮箱已存在！");
             }
@@ -184,7 +184,7 @@ public class BackUserController {
 
         ModelAndView modelAndView = new ModelAndView();
         User sessionUser = (User) session.getAttribute("user");
-        User user =  userService.getUserById(sessionUser.getUserId());
+        User user =  userService.getUserById(sessionUser.getId());
         modelAndView.addObject("user",user);
 
         modelAndView.setViewName("Admin/User/profile");

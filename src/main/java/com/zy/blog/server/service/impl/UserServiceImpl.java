@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public List<User> listUser() {
         List<User> userList = userMapper.listUser();
         for (int i = 0; i < userList.size(); i++) {
-            Integer articleCount = articleMapper.countArticleByUser(userList.get(i).getUserId());
+            Integer articleCount = articleMapper.countArticleByUser(userList.get(i).getId());
             userList.get(i).setArticleCount(articleCount);
         }
         return userList;

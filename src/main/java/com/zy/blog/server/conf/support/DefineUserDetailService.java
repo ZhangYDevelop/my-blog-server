@@ -1,6 +1,8 @@
 package com.zy.blog.server.conf.support;
 
+import com.zy.blog.server.entity.User;
 import com.zy.blog.server.mapper.UserMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.GrantedAuthority;
@@ -22,14 +24,18 @@ public class DefineUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        MyUserDetails user = null;
+        User userSource = userMapper.getUserByName(username);
+        user = new MyUserDetails();
+        BeanUtils.copyProperties(userSource, user);
 
-        MyUserDetails user = userMapper.getUserByNameEx(username);
+
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
 
         List<GrantedAuthority> list = new ArrayList<>();
-        if(!StringUtils.isEmpty(user.getRoles())) {
+        if (!StringUtils.isEmpty(user.getRoles())) {
             String[] arr = user.getRoles().split(";");
             for (String s : arr) {
                 list.add(new SimpleGrantedAuthority(s));

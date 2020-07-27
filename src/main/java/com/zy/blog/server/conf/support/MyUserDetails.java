@@ -37,7 +37,7 @@ public class MyUserDetails extends User implements UserDetails  {
 
     @Override
     public boolean isEnabled() {
-        return this.isEnable();
+        return true;
     }
 
 }

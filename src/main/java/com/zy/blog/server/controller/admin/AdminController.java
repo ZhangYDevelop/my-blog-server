@@ -1,5 +1,6 @@
 package com.zy.blog.server.controller.admin;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zy.blog.server.entity.Article;
 import com.zy.blog.server.entity.Comment;
@@ -8,36 +9,37 @@ import com.zy.blog.server.service.ArticleService;
 import com.zy.blog.server.service.CommentService;
 import com.zy.blog.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.zy.blog.server.util.MyUtils.getIpAddr;
 
 /**
  * @author zhangyu
  */
-@Controller
+@RestController
+@SuppressWarnings("all")
 public class AdminController {
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private ArticleService articleService;
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     /**
      * 后台首页
@@ -55,62 +57,31 @@ public class AdminController {
         return "Admin/index";
     }
 
-    /**
-     * 登录页面显示
-     *
-     * @return
-     */
-    @RequestMapping("/login")
-    public String loginPage() {
-        return "Admin/login";
-    }
+
 
     /**
      * 登录验证
      *
-     * @param request
-     * @param response
      * @return
      */
-    @RequestMapping(value = "/loginVerify",method = RequestMethod.POST)
-    @ResponseBody
-    public String loginVerify(HttpServletRequest request, HttpServletResponse response)  {
-        Map<String, Object> map = new HashMap<String, Object>();
+    @PostMapping(value = "/user/login")
+    public ResponseEntity loginVerify(@RequestBody Map<String, String> map, HttpServletRequest req)  {
+        String username = map.get("username");
+        String password = map.get("password");
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String rememberme = request.getParameter("rememberme");
-        User user = userService.getUserByNameOrEmail(username);
-        if(user==null) {
-            map.put("code",0);
-            map.put("msg","用户名无效！");
-        } else if(!user.getPassword().equals(password)) {
-            map.put("code",0);
-            map.put("msg","密码错误！");
-        } else {
-            //登录成功
-            map.put("code",1);
-            map.put("msg","");
-            //添加session
-            request.getSession().setAttribute("user", user);
-            //添加cookie
-            if(rememberme!=null) {
-                //创建两个Cookie对象
-                Cookie nameCookie = new Cookie("username", username);
-                //设置Cookie的有效期为3天
-                nameCookie.setMaxAge(60 * 60 * 24 * 3);
-                Cookie pwdCookie = new Cookie("password", password);
-                pwdCookie.setMaxAge(60 * 60 * 24 * 3);
-                response.addCookie(nameCookie);
-                response.addCookie(pwdCookie);
-            }
-            user.setUserLastLoginTime(new Date());
-            user.setUserLastLoginIp(getIpAddr(request));
-            userService.updateUser(user);
-
-        }
-        String result = new JSONObject(map).toString();
-        return result;
+        MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        param.add("grant_type", "password");
+        param.add("scope", "web");
+        param.add("username", username);
+        param.add("password", password);
+        param.add("client_id", "client1");
+        param.add("client_secret", "admin");
+        HttpMethod httpMethod = HttpMethod.POST;
+        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpEntity entity = new HttpEntity(param, httpHeaders);
+        ResponseEntity responseEntity = restTemplate.exchange("http://localhost:8080/oauth/token", httpMethod,entity, Object.class);
+        return ResponseEntity.ok(responseEntity.getBody());
     }
 
     /**

@@ -7,13 +7,12 @@ import java.util.Date;
 
 public class User {
     @Id
-    @Column(name = "user_id")
-    private Integer userId;
+    private Integer id;
 
-    @Column(name = "user_name")
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "user_pass")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "user_nickname")
@@ -75,18 +74,12 @@ public class User {
         this.articleCount = articleCount;
     }
 
-    /**
-     * @return user_id
-     */
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    /**
-     * @param userId
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getUsername() {

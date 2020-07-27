@@ -68,11 +68,9 @@ public class CategoryController {
     }
 
     @ApiOperation("查询所文章分类")
-    @RequestMapping(value = "/map")
-    public ResponseEntity< List<Category>> siteMap(Model model) {
-        //分类显示
+    @RequestMapping(value = "/category/map")
+    public ResponseEntity< List<Category>> siteMap() {
         List<Category> categoryList = categoryService.listCategory();
-        model.addAttribute("categoryList", categoryList);
         return ResponseEntity.ok(categoryList);
     }
 

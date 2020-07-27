@@ -2,6 +2,7 @@ package com.zy.blog.server.mapper;
 
 import com.zy.blog.server.conf.support.MyUserDetails;
 import com.zy.blog.server.entity.User;
+import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
@@ -76,6 +77,5 @@ public interface UserMapper extends Mapper<User> {
      */
     User getUserByEmail(String email) ;
 
-    MyUserDetails getUserByNameEx(String name) ;
 
 }

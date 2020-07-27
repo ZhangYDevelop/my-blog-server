@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zy.blog.server.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.zy.blog.server.entity.User">
-        <id column="user_id" property="userId" jdbcType="INTEGER"/>
-        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
-        <result column="user_pass" property="userPass" jdbcType="VARCHAR"/>
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="user_nickname" property="userNickname" jdbcType="VARCHAR"/>
         <result column="user_email" property="userEmail" jdbcType="VARCHAR"/>
         <result column="user_url" property="userUrl" jdbcType="VARCHAR"/>
@@ -13,32 +13,35 @@
         <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP"/>
         <result column="user_last_login_time" property="userLastLoginTime" jdbcType="TIMESTAMP"/>
         <result column="user_status" property="userStatus" jdbcType="INTEGER"/>
+
+        <result column="roles" property="roles" jdbcType="VARCHAR"/>
+        <result column="enable" property="enable" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="tb">user</sql>
 
     <sql id="Base_Column_List">
-    user_id, user_name, user_pass, user_nickname, user_email, user_url, user_avatar, 
-    user_last_login_ip, user_register_time, user_last_login_time, user_status
+    id, username, password, user_nickname, user_email, user_url, user_avatar,
+    user_last_login_ip, user_register_time, user_last_login_time, user_status, roles,enable
   </sql>
 
     <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         select
         <include refid="Base_Column_List"/>
         from <include refid="tb"/>
-        where user_id = #{userId,jdbcType=INTEGER}
+        where id = #{userId,jdbcType=INTEGER}
     </select>
 
     <delete id="deleteById" parameterType="java.lang.Integer">
         delete from
         <include refid="tb"/>
-        where user_id = #{userId,jdbcType=INTEGER}
+        where id = #{userId,jdbcType=INTEGER}
     </delete>
 
     <insert id="insert" parameterType="com.zy.blog.server.entity.User" useGeneratedKeys="true" keyProperty="userId">
         insert into
         <include refid="tb"/>
-        (user_id, user_name, user_pass,
+        (id, username, password,
         user_nickname, user_email, user_url,
         user_avatar, user_last_login_ip, user_register_time,
         user_last_login_time, user_status)
@@ -52,8 +55,8 @@
         update
         <include refid="tb"/>
         <set>
-            <if test="userName != null">user_name = #{userName,jdbcType=VARCHAR},</if>
-            <if test="userPass != null">user_pass = #{userPass,jdbcType=VARCHAR},</if>
+            <if test="userName != null">username = #{userName,jdbcType=VARCHAR},</if>
+            <if test="userPass != null">password = #{userPass,jdbcType=VARCHAR},</if>
             <if test="userNickname != null">user_nickname = #{userNickname,jdbcType=VARCHAR},</if>
             <if test="userEmail != null">user_email = #{userEmail,jdbcType=VARCHAR},</if>
             <if test="userUrl != null">user_url = #{userUrl,jdbcType=VARCHAR},</if>
@@ -63,7 +66,7 @@
             <if test="userLastLoginTime != null">user_last_login_time = #{userLastLoginTime,jdbcType=TIMESTAMP},</if>
             <if test="userStatus != null">user_status = #{userStatus,jdbcType=INTEGER},</if>
         </set>
-        where user_id = #{userId,jdbcType=INTEGER}
+        where id = #{userId,jdbcType=INTEGER}
     </update>
 
     <!--用户列表查询-->
@@ -82,7 +85,7 @@
         FROM
         <include refid="tb"/>
         <where>
-            user_name=#{value} OR user_email=#{value}
+            username=#{value} OR user_email=#{value}
         </where>
         AND user_status>0
         limit 1
@@ -95,10 +98,11 @@
         FROM
         <include refid="tb"/>
         <where>
-            user_name=#{value}
+            username=#{value}
         </where>
         limit 1
     </select>
+
 
     <!--根据Email查用户-->
     <select id="getUserByEmail" parameterType="String"  resultMap="BaseResultMap">

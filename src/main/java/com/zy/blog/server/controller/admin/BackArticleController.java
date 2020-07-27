@@ -88,7 +88,7 @@ public class BackArticleController {
         //用户ID
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            article.setArticleUserId(user.getUserId());
+            article.setArticleUserId(user.getId());
         }
         article.setArticleTitle(articleParam.getArticleTitle());
         //文章摘要

@@ -36,12 +36,11 @@ public class IndexController {
     @ApiOperation("首页获取所有文章")
     @RequestMapping(value = "/index")
     public ResponseEntity< PageInfo<Article>> index(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
-                                @RequestParam(required = false, defaultValue = "10") Integer pageSize, Model model) {
+                                @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
         HashMap<String, Object> criteria = new HashMap<>(1);
         criteria.put("status", ArticleStatus.PUBLISH.getValue());
         //文章列表
         PageInfo<Article> articleList = articleService.pageArticle(pageIndex, pageSize, criteria);
-        model.addAttribute("pageInfo", articleList);
 
         return ResponseEntity.ok(articleList);
     }

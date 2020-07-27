@@ -6,6 +6,8 @@ import javax.persistence.Transient;
 
 public class Category {
 
+    public Category() {
+    }
 
     public Category(Integer categoryId, Integer categoryPid, String categoryName, String categoryDescription, Integer categoryOrder, String categoryIcon, Integer articleCount) {
         this.categoryId = categoryId;
