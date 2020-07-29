@@ -26,7 +26,7 @@ public class UploadFileController {
     /**
      * 文件保存目录，物理路径
      */
-    public  String rootPath = "resource/assets/uploads/";
+    public  String rootPath = "/zyspace/data/blog/";
 
     public final String allowSuffix = ".bmp.jpg.jpeg.png.gif.pdf.doc.zip.rar.gz";
 
@@ -42,7 +42,7 @@ public class UploadFileController {
 
 
         // "/Users/zhangy/Documents/apache-tomcat-8.5.39/webapps/ROOT/"
-        rootPath = request.getSession().getServletContext().getRealPath("/") + rootPath;
+//        rootPath = request.getSession().getServletContext().getRealPath("/") + rootPath;
 
         //1.文件后缀过滤，只允许部分后缀
         //文件的完整名称,如spring.jpeg

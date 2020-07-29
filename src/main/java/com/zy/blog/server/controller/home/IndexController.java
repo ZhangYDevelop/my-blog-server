@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +33,17 @@ public class IndexController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private OptionsService optionsService;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private TagService tagService;
+
+
 
     @ApiOperation("首页获取所有文章")
     @RequestMapping(value = "/index")
@@ -58,6 +70,30 @@ public class IndexController {
         PageInfo<Article> articlePageInfo = articleService.pageArticle(pageIndex, pageSize, criteria);
         model.addAttribute("pageInfo", articlePageInfo);
         return  ResponseEntity.ok(articlePageInfo);
+    }
+
+    @ApiOperation("获取网站基本信息")
+    @RequestMapping(value = "/options")
+    public  ResponseEntity<Options> getOptions() {
+        Options options =  optionsService.getOptions();
+
+        return ResponseEntity.ok(options);
+    }
+
+    @ApiOperation("获取网站概况")
+    @RequestMapping(value = "/siteGk")
+    public ResponseEntity<List<Object>> getSiteGaiKuang() {
+        //获得网站概况
+        List<Object> siteBasicStatistics = new ArrayList<>();
+        siteBasicStatistics.add(articleService.countArticle(ArticleStatus.PUBLISH.getValue()) );
+        siteBasicStatistics.add(articleService.countArticleComment() );
+        siteBasicStatistics.add(categoryService.countCategory() );
+        siteBasicStatistics.add(tagService.countTag() );
+        siteBasicStatistics.add(articleService.countArticleView() );
+
+        //最后更新的文章
+        siteBasicStatistics.add(articleService.getLastUpdateArticle().getArticleUpdateTime());
+        return ResponseEntity.ok(siteBasicStatistics);
     }
 
 }
