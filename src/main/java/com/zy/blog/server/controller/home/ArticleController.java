@@ -107,8 +107,8 @@ public class ArticleController {
         //文章信息，分类，标签，作者，评论
         Article article = articleService.getArticleByStatusAndId(ArticleStatus.PUBLISH.getValue(), articleId);
         //用户信息
-        User user = userService.getUserById(article.getArticleUserId());
-        article.setUser(user);
+//        User user = userService.getUserById(article.getArticleUserId());
+//        article.setUser(user);
         return  ResponseEntity.ok(article);
     }
 

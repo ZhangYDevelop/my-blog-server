@@ -84,4 +84,17 @@ public class CommentController {
         return  ResponseEntity.ok(commentList);
     }
 
+
+    /**
+     * 最近评论
+     */
+    @ApiOperation("最近评论")
+    @GetMapping(value = "/comment/recentComment")
+    public ResponseEntity< List<Comment>> listRecentComment() {
+        //评论列表
+        List<Comment> recentCommentList = commentService.listRecentComment(10);
+        return  ResponseEntity.ok(recentCommentList);
+    }
+
+
 }

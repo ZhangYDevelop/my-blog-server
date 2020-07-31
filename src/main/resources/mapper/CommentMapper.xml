@@ -86,7 +86,7 @@
 
 
     <!--获取评论列表-->
-    <select id="listComment" resultType="com.zy.blog.server.entity.Comment">
+    <select id="listComment" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -102,7 +102,7 @@
     </select>
 
     <!--获得最近评论，访客的评论-->
-    <select id="listRecentComment" parameterType="Integer" resultType="com.zy.blog.server.entity.Comment">
+    <select id="listRecentComment" parameterType="Integer" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM
@@ -112,7 +112,7 @@
         LIMIT #{limit}
     </select>
 
-    <select id="listChildComment" resultType="com.zy.blog.server.entity.Comment">
+    <select id="listChildComment" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM

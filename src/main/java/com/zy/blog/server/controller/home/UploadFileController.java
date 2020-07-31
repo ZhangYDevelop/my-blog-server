@@ -1,4 +1,4 @@
-package com.zy.blog.server.controller.admin;
+package com.zy.blog.server.controller.home;
 
 import com.zy.blog.server.dto.JsonResult;
 import com.zy.blog.server.dto.UploadFileVO;
@@ -19,7 +19,7 @@ import java.util.Calendar;
  * @author zhangyu
  */
 @RestController
-@RequestMapping("/admin/upload")
+@RequestMapping("/home")
 public class UploadFileController {
 
     private Logger log = LoggerFactory.getLogger(UploadFileController.class);
@@ -37,8 +37,8 @@ public class UploadFileController {
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "/img", method = RequestMethod.POST)
-    public JsonResult uploadFile(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    public JsonResult uploadFile( MultipartFile file, HttpServletRequest request) {
 
 
         // "/Users/zhangy/Documents/apache-tomcat-8.5.39/webapps/ROOT/"
