@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -60,15 +61,19 @@ public class IndexController {
     @ApiOperation("根据关键字搜索文章")
     @RequestMapping(value = "/index/search")
     public ResponseEntity< PageInfo<Article>> search(
-            @RequestParam("keywords") String keywords,
+            @RequestParam("keywords") String keywords, @RequestParam("categoryId") String categoryId,
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize, Model model) {
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
         //文章列表
         HashMap<String, Object> criteria = new HashMap<>(2);
         criteria.put("status", ArticleStatus.PUBLISH.getValue());
-        criteria.put("keywords", keywords);
+        if (!StringUtils.isEmpty(keywords)) {
+            criteria.put("keywords", keywords);
+        }
+        if (!StringUtils.isEmpty(categoryId)) {
+            criteria.put("categoryId", categoryId);
+        }
         PageInfo<Article> articlePageInfo = articleService.pageArticle(pageIndex, pageSize, criteria);
-        model.addAttribute("pageInfo", articlePageInfo);
         return  ResponseEntity.ok(articlePageInfo);
     }
 
