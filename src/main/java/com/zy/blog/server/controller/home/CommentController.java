@@ -43,8 +43,8 @@ public class CommentController {
      * @param comment
      */
     @ApiOperation("添加评论")
-    @RequestMapping(value = "/comment", method = {RequestMethod.POST})
-    public ResponseEntity insertComment(HttpServletRequest request, Comment comment) {
+    @PostMapping(value = "/comment")
+    public ResponseEntity insertComment(HttpServletRequest request, @RequestBody  Comment comment) {
         //添加评论
         comment.setCommentCreateTime(new Date());
         comment.setCommentIp(MyUtils.getIpAddr(request));
@@ -69,7 +69,7 @@ public class CommentController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("添加失败");
         }
-        return ResponseEntity.ok("添加成功");
+        return ResponseEntity.ok(comment);
     }
 
     /**

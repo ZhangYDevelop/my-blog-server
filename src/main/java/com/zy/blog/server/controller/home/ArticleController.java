@@ -119,11 +119,18 @@ public class ArticleController {
      * @return 点赞量数量
      */
     @ApiOperation("点赞量数量")
-    @GetMapping(value = "/article/like/{id}")
-    public ResponseEntity<String> increaseLikeCount(@PathVariable("id") Integer id) {
+    @GetMapping(value = "/article/like/{id}/{type}")
+    public ResponseEntity<String> increaseLikeCount(@PathVariable("id") Integer id, @PathVariable("type") Integer type) {
         Article article = articleService.getArticleByStatusAndId(ArticleStatus.PUBLISH.getValue(), id);
-        Integer articleCount = article.getArticleLikeCount() + 1;
-        article.setArticleLikeCount(articleCount);
+        int articleCount = 0;
+        if (1 == type.intValue()) {
+             articleCount = article.getArticleLikeCount() + 1;
+             article.setArticleLikeCount(articleCount);
+        }
+        if (0 == type.intValue()) {
+            articleCount = article.getArticleLikeCount() - 1;
+            article.setArticleLikeCount(articleCount);
+        }
         articleService.updateArticle(article);
         return ResponseEntity.ok(JSON.toJSONString(articleCount));
     }
