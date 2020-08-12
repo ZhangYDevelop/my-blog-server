@@ -16,6 +16,8 @@ public class ArticleParam  implements Serializable {
 
     private String articleContent;
 
+    private String articleSummary;
+
     private Integer articleParentCategoryId;
 
     private Integer articleChildCategoryId;
@@ -28,6 +30,14 @@ public class ArticleParam  implements Serializable {
 
     public Integer getArticleId() {
         return articleId;
+    }
+
+    public String getArticleSummary() {
+        return articleSummary;
+    }
+
+    public void setArticleSummary(String articleSummary) {
+        this.articleSummary = articleSummary;
     }
 
     public void setArticleId(Integer articleId) {

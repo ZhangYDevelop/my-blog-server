@@ -4,6 +4,7 @@ import com.zy.blog.server.entity.Menu;
 import com.zy.blog.server.enums.MenuLevel;
 import com.zy.blog.server.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +29,10 @@ public class BackMenuController {
      *
      * @return
      */
-    @RequestMapping(value = "")
-    public String menuList(Model model)  {
+    @RequestMapping(value = "/list")
+    public ResponseEntity menuList()  {
         List<Menu> menuList = menuService.listMenu();
-        model.addAttribute("menuList",menuList);
-        return "Admin/Menu/index";
+        return ResponseEntity.ok(menuList);
     }
 
     /**

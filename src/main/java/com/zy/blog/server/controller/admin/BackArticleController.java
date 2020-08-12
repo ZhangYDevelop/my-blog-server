@@ -11,12 +11,10 @@ import com.zy.blog.server.service.ArticleService;
 import com.zy.blog.server.service.CategoryService;
 import com.zy.blog.server.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -30,6 +28,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/admin/article")
+@SuppressWarnings("all")
 public class BackArticleController {
     @Autowired
     private ArticleService articleService;
@@ -169,22 +168,15 @@ public class BackArticleController {
      * @param articleParam
      * @return
      */
-    @RequestMapping(value = "/editSubmit", method = RequestMethod.POST)
-    public String editArticleSubmit(ArticleParam articleParam) {
+    @PostMapping(value = "/editSubmit")
+    public ResponseEntity editArticleSubmit( @RequestBody  ArticleParam articleParam) {
         Article article = new Article();
         article.setArticleId(articleParam.getArticleId());
         article.setArticleTitle(articleParam.getArticleTitle());
         article.setArticleContent(articleParam.getArticleContent());
         article.setArticleStatus(articleParam.getArticleStatus());
-        //文章摘要
-        int summaryLength = 150;
-        String summaryText = HtmlUtil.cleanHtmlTag(article.getArticleContent());
-        if (summaryText.length() > summaryLength) {
-            String summary = summaryText.substring(0, summaryLength);
-            article.setArticleSummary(summary);
-        } else {
-            article.setArticleSummary(summaryText);
-        }
+        article.setArticleSummary(articleParam.getArticleSummary());
+
         //填充分类
         List<Category> categoryList = new ArrayList<>();
         if (articleParam.getArticleChildCategoryId() != null) {
@@ -204,7 +196,7 @@ public class BackArticleController {
         }
         article.setTagList(tagList);
         articleService.updateArticleDetail(article);
-        return "redirect:/admin/article";
+        return ResponseEntity.ok().build();
     }
 
 

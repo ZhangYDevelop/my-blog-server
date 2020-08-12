@@ -1,7 +1,7 @@
 server:
   port: 8080
 #  servlet:
-#    context-path: /blog-server
+#    context-path: /server
   max-http-header-size: 104857600
   tomcat:
     max-http-post-size: 104857600

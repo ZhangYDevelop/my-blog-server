@@ -154,18 +154,18 @@ public class ArticleServiceImpl implements ArticleService {
                                          HashMap<String, Object> criteria) {
         PageHelper.startPage(pageIndex, pageSize);
         List<Article> articleList = articleMapper.findAll(criteria);
-        for (int i = 0; i < articleList.size(); i++) {
-            //封装CategoryList
-            List<Category> categoryList = articleCategoryRefMapper.listCategoryByArticleId(articleList.get(i).getArticleId());
-            if (categoryList == null || categoryList.size() == 0) {
-                categoryList = new ArrayList<>();
-                categoryList.add(Category.Default());
-            }
-            articleList.get(i).setCategoryList(categoryList);
-//            //封装TagList
-//            List<Tag> tagList = articleTagRefMapper.listTagByArticleId(articleList.get(i).getArticleId());
-//            articleList.get(i).setTagList(tagList);
-        }
+//        for (int i = 0; i < articleList.size(); i++) {
+//            //封装CategoryList
+//            List<Category> categoryList = articleCategoryRefMapper.listCategoryByArticleId(articleList.get(i).getArticleId());
+//            if (categoryList == null || categoryList.size() == 0) {
+//                categoryList = new ArrayList<>();
+//                categoryList.add(Category.Default());
+//            }
+//            articleList.get(i).setCategoryList(categoryList);
+////            //封装TagList
+////            List<Tag> tagList = articleTagRefMapper.listTagByArticleId(articleList.get(i).getArticleId());
+////            articleList.get(i).setTagList(tagList);
+//        }
         return new PageInfo<>(articleList);
     }
 

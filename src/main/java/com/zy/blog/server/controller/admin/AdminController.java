@@ -80,7 +80,7 @@ public class AdminController {
         HttpMethod httpMethod = HttpMethod.POST;
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         HttpEntity entity = new HttpEntity(param, httpHeaders);
-        ResponseEntity responseEntity = restTemplate.exchange("http://localhost:8080/oauth/token", httpMethod,entity, Object.class);
+        ResponseEntity responseEntity = restTemplate.exchange("http://localhost:8080/server/oauth/token", httpMethod,entity, Object.class);
         return ResponseEntity.ok(responseEntity.getBody());
     }
 
