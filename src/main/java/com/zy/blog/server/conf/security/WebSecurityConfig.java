@@ -47,7 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .cors().and()
             .csrf().disable()
@@ -57,6 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/user/login").permitAll()
                 .antMatchers("/home/**").permitAll()
+                .antMatchers("/ueditor/ueditorUpload").permitAll()
+                .antMatchers("/ueditor/jsp/upload").permitAll()
             .anyRequest().authenticated()
             .and().formLogin();
     }

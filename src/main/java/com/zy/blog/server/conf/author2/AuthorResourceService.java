@@ -17,6 +17,7 @@ public class AuthorResourceService extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        http.headers().frameOptions().disable();
         http
                 .cors().and()
                 .csrf().disable()
@@ -25,8 +26,9 @@ public class AuthorResourceService extends ResourceServerConfigurerAdapter {
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/user/login").permitAll()
-                .antMatchers("/home/**" +
-                        "").permitAll()
+                .antMatchers("/home/**" ).permitAll()
+                .antMatchers("/ueditor/ueditorUpload").permitAll()
+                .antMatchers("/ueditor/jsp/upload").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin();
     }

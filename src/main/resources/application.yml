@@ -1,7 +1,7 @@
 server:
   port: 8080
-#  servlet:
-#    context-path: /server
+  servlet:
+    context-path: /server
   max-http-header-size: 104857600
   tomcat:
     max-http-post-size: 104857600
@@ -27,3 +27,9 @@ mapper:
   mappers: com.zy.blog.server.core.MyMapper
   not-empty: false
   identity: MYSQL
+
+global:
+  setting:
+    ueditor: /file/ueditor/
+    file:
+      path: C:/zhangyu/upload
