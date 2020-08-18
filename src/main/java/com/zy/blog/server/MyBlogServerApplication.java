@@ -15,17 +15,10 @@ import org.springframework.util.DigestUtils;
 @SpringBootApplication
 public class MyBlogServerApplication extends SpringBootServletInitializer {
 
-    private Logger logger = LoggerFactory.getLogger(MyBlogServerApplication.class);
+    private static  Logger logger = LoggerFactory.getLogger(MyBlogServerApplication.class);
 
     public static void main(String[] args) {
+        logger.info("application start ...");
         SpringApplication.run(MyBlogServerApplication.class, args);
     }
-     // TODO tomcat war包部署时放开下面内容
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        logger.info("application start ...");
-        return application.sources(MyBlogServerApplication.class);
-    }
-
-
 }

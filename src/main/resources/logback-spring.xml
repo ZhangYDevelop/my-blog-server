@@ -4,11 +4,11 @@
 	<include resource="org/springframework/boot/logging/logback/base.xml"/>
 	<jmxConfigurator/>
 	<!-- 项目名称 -->
-	<property name="PROJECT_NAME" value="my-blog-server"/>
+	<property name="PROJECT_NAME" value="blog-server-logs"/>
 	<!-- 动态从yml文件中获取对应key(server.context-path)的值 -->
 
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="LOG_HOME" value="../${PROJECT_NAME}/logs/"/>
+	<property name="LOG_HOME" value="../${PROJECT_NAME}/"/>
 	<!-- 控制台输出 -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -32,7 +32,7 @@
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_HOME}/${PROJECT_NAME}/error/error-%d{yyyyMMdd}_%i.log
+			<FileNamePattern>${LOG_HOME}/error/error-%d{yyyyMMdd}_%i.log
 			</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>365</MaxHistory>
@@ -63,7 +63,7 @@
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_HOME}/${PROJECT_NAME}/info/info-%d{yyyyMMdd}_%i.log
+			<FileNamePattern>${LOG_HOME}/info/info-%d{yyyyMMdd}_%i.log
 			</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>15</MaxHistory>
@@ -92,7 +92,7 @@
 		<rollingPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!--日志文件输出的文件名 -->
-			<FileNamePattern>${LOG_HOME}/${PROJECT_NAME}/debug/debug-%d{yyyyMMdd}_%i.log
+			<FileNamePattern>${LOG_HOME}/debug/debug-%d{yyyyMMdd}_%i.log
 			</FileNamePattern>
 			<!--日志文件保留天数 -->
 			<MaxHistory>15</MaxHistory>
