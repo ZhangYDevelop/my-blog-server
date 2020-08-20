@@ -3,6 +3,7 @@ package com.zy.blog.server.controller.admin;
 import cn.hutool.http.HtmlUtil;
 import com.github.pagehelper.PageInfo;
 import com.zy.blog.server.dto.ArticleParam;
+import com.zy.blog.server.dto.ResultVO;
 import com.zy.blog.server.entity.Article;
 import com.zy.blog.server.entity.Category;
 import com.zy.blog.server.entity.Tag;
@@ -82,25 +83,12 @@ public class BackArticleController {
      * @return
      */
     @RequestMapping(value = "/insertSubmit", method = RequestMethod.POST)
-    public String insertArticleSubmit(HttpSession session, ArticleParam articleParam) {
+    public ResponseEntity<ResultVO> insertArticleSubmit(@RequestBody ArticleParam articleParam) {
         Article article = new Article();
-        //用户ID
-        User user = (User) session.getAttribute("user");
-        if (user != null) {
-            article.setArticleUserId(user.getId());
-        }
         article.setArticleTitle(articleParam.getArticleTitle());
-        //文章摘要
-        int summaryLength = 150;
-        String summaryText = HtmlUtil.cleanHtmlTag(articleParam.getArticleContent());
-        if (summaryText.length() > summaryLength) {
-            String summary = summaryText.substring(0, summaryLength);
-            article.setArticleSummary(summary);
-        } else {
-            article.setArticleSummary(summaryText);
-        }
         article.setArticleContent(articleParam.getArticleContent());
         article.setArticleStatus(articleParam.getArticleStatus());
+        article.setArticleSummary(articleParam.getArticleSummary());
         //填充分类
         List<Category> categoryList = new ArrayList<>();
         if (articleParam.getArticleChildCategoryId() != null) {
@@ -121,7 +109,7 @@ public class BackArticleController {
         article.setTagList(tagList);
 
         articleService.insertArticle(article);
-        return "redirect:/admin/article";
+        return ResponseEntity.ok(ResultVO.success(null));
     }
 
 
@@ -130,9 +118,10 @@ public class BackArticleController {
      *
      * @param id 文章ID
      */
-    @RequestMapping(value = "/delete/{id}")
-    public void deleteArticle(@PathVariable("id") Integer id) {
+    @GetMapping(value = "/delete/{id}")
+    public ResponseEntity<ResultVO> deleteArticle(@PathVariable("id") Integer id) {
         articleService.deleteArticle(id);
+        return ResponseEntity.ok(ResultVO.success(null));
     }
 
 
@@ -169,7 +158,7 @@ public class BackArticleController {
      * @return
      */
     @PostMapping(value = "/editSubmit")
-    public ResponseEntity editArticleSubmit( @RequestBody  ArticleParam articleParam) {
+    public ResponseEntity<ResultVO> editArticleSubmit(@RequestBody  ArticleParam articleParam) {
         Article article = new Article();
         article.setArticleId(articleParam.getArticleId());
         article.setArticleTitle(articleParam.getArticleTitle());
@@ -179,7 +168,7 @@ public class BackArticleController {
 
         //填充分类
         List<Category> categoryList = new ArrayList<>();
-        if (articleParam.getArticleChildCategoryId() != null) {
+        if (articleParam.getArticleParentCategoryId() != null) {
             categoryList.add(new Category(articleParam.getArticleParentCategoryId()));
         }
         if (articleParam.getArticleChildCategoryId() != null) {
@@ -196,7 +185,8 @@ public class BackArticleController {
         }
         article.setTagList(tagList);
         articleService.updateArticleDetail(article);
-        return ResponseEntity.ok().build();
+
+        return ResponseEntity.ok(ResultVO.success(null));
     }
 
 

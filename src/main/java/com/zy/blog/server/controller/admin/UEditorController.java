@@ -69,7 +69,7 @@ public class UEditorController {
                             jo.put("title", infoList[1]); //随意，代表的是鼠标经过图片时显示的文字
                             jo.put("type", FilenameUtils.getExtension(pic.getOriginalFilename())); //文件后缀名
                             //jo.put("url", infoList[2]);//这里的url字段表示的是上传后的图片在图片服务器的完整地址（http://ip:端口/***/***/***.jpg）
-                            jo.put("url", "server/ueditor/jsp/upload?filePath="+ infoList[2]);//这里的url字段表示的是上传后的图片在图片服务器的完整地址
+                            jo.put("url", "http:81.70.31.159/server/ueditor/jsp/upload?filePath="+ infoList[2]);//这里的url字段表示的是上传后的图片在图片服务器的完整地址
                         }else{    //如果上传失败
                         }
 //

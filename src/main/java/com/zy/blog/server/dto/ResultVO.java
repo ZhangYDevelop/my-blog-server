@@ -1,6 +1,8 @@
 package com.zy.blog.server.dto;
 
 
+import org.springframework.http.HttpStatus;
+
 import java.io.Serializable;
 
 /**
@@ -57,5 +59,13 @@ public class ResultVO<T>  implements Serializable {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    public static <T> ResultVO<T> success(T data){
+        return new ResultVO<T>(HttpStatus.OK.value(),"操作成功",data);
+    }
+
+    public static <T> ResultVO<T> error(int code, String msg){
+        return new ResultVO<T>(code,msg, null);
     }
 }
