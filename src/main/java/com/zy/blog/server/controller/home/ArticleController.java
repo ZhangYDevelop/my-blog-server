@@ -106,12 +106,6 @@ public class ArticleController {
 
         //文章信息，分类，标签，作者，评论
         Article article = articleService.getArticleByStatusAndId(ArticleStatus.PUBLISH.getValue(), articleId);
-        String content = article.getArticleContent();
-        content = content.replaceAll("<p>", "<div>");
-        content = content.replaceAll("</p>", "</div>");
-        content = content.replaceAll("divre", "div");
-//        content = content.replaceAll("pre", "div");
-        article.setArticleContent(content);
         //用户信息
 //        User user = userService.getUserById(article.getArticleUserId());
 //        article.setUser(user);
