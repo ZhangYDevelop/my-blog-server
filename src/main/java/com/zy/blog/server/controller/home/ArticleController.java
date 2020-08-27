@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章的controller
@@ -32,8 +33,9 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+
     @Autowired
-    private UserService userService;
+    private  ArticleViewService articleViewService;
 
     /**
      * 获得热评文章
@@ -148,6 +150,10 @@ public class ArticleController {
         Integer articleCount = article.getArticleViewCount() + 1;
         article.setArticleViewCount(articleCount);
         articleService.updateArticle(article);
+
+        // 增加文章浏览记录
+        articleViewService.addArticleView(id);
+
         return ResponseEntity.ok(JSON.toJSONString(articleCount));
     }
 
@@ -165,6 +171,14 @@ public class ArticleController {
         return ResponseEntity.ok(articleList);
     }
 
-
+    /**
+     * 文章浏览量统计
+     */
+    @ApiOperation("文章详情页显示")
+    @GetMapping(value = "/getArticleViewTongji")
+    public ResponseEntity<List<Map>> getArticleViewTongji() {
+        List<Map> list = articleViewService.getArticleTongji();
+        return  ResponseEntity.ok(list);
+    }
 
 }
