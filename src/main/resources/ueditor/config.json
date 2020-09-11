@@ -8,7 +8,7 @@
     "imageCompressEnable": true, /* 是否压缩图片,默认是true */
     "imageCompressBorder": 1600, /* 图片压缩最长边限制 */
     "imageInsertAlign": "none", /* 插入的图片浮动方式 */
-    "imageUrlPrefix": "http://81.70.31.159:8080/", /* 图片访问路径前缀 */
+    "imageUrlPrefix": "http://www.xiaoyuge.com.cn:8080/server", /* 图片访问路径前缀 */
     "imagePathFormat": "/ueditor/jsp/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
                                 /* {filename} 会替换成原文件名,配置这项需要注意中文乱码问题 */
                                 /* {rand:6} 会替换成随机数,后面的数字是随机数的位数 */
@@ -61,7 +61,7 @@
     "fileActionName": "uploadfile", /* controller里,执行上传视频的action名称 */
     "fileFieldName": "upfile", /* 提交的文件表单名称 */
     "filePathFormat": "/ueditor/jsp/upload/file/{yyyy}{mm}{dd}/{time}{rand:6}", /* 上传保存路径,可以自定义保存路径和文件名格式 */
-    "fileUrlPrefix": "", /* 文件访问路径前缀 */
+    "fileUrlPrefix": "http://www.xiaoyuge.com.cn:8080", /* 文件访问路径前缀 */
     "fileMaxSize": 1073741824, /* 上传大小限制，单位B，默认1G */
     "fileAllowFiles": [
         ".png", ".jpg", ".jpeg", ".gif", ".bmp",

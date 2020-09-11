@@ -8,7 +8,7 @@
 	<!-- 动态从yml文件中获取对应key(server.context-path)的值 -->
 
 	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
-	<property name="LOG_HOME" value="../${PROJECT_NAME}/"/>
+	<property name="LOG_HOME" value="./${PROJECT_NAME}/"/>
 	<!-- 控制台输出 -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
