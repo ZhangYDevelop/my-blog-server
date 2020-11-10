@@ -2,12 +2,15 @@ package com.zy.blog.server.controller.admin;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 import com.zy.blog.server.entity.Article;
 import com.zy.blog.server.entity.Comment;
 import com.zy.blog.server.entity.User;
+import com.zy.blog.server.enums.ArticleStatus;
 import com.zy.blog.server.service.ArticleService;
 import com.zy.blog.server.service.CommentService;
 import com.zy.blog.server.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -41,22 +44,18 @@ public class AdminController {
     @Autowired
     private RestTemplate restTemplate;
 
-    /**
-     * 后台首页
-     *
-     * @return
-     */
-    @RequestMapping("/admin")
-    public String index(Model model)  {
-        //文章列表
-        List<Article> articleList = articleService.listRecentArticle(5);
-        model.addAttribute("articleList",articleList);
-        //评论列表
-        List<Comment> commentList = commentService.listRecentComment(5);
-        model.addAttribute("commentList",commentList);
-        return "Admin/index";
-    }
 
+
+    @ApiOperation("首页获取所有文章")
+    @RequestMapping(value = "/admin/index")
+    public ResponseEntity<PageInfo<Article>> index(@RequestParam(required = false, defaultValue = "1") Integer pageIndex,
+                                                   @RequestParam(required = false, defaultValue = "10") Integer pageSize) {
+        HashMap<String, Object> criteria = new HashMap<>(1);
+        criteria.put("status", ArticleStatus.PUBLISH.getValue());
+        //文章列表
+        PageInfo<Article> articleList = articleService.pageArticle(pageIndex, pageSize, criteria);
+        return ResponseEntity.ok(articleList);
+    }
 
 
     /**

@@ -5,11 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.zy.blog.server.entity.User;
 import com.zy.blog.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,15 +33,24 @@ public class BackUserController {
      *
      * @return
      */
-    @RequestMapping(value = "")
-    public ModelAndView userList()  {
-        ModelAndView modelandview = new ModelAndView();
+    @GetMapping(value = "/getUserByUserName")
+    public ResponseEntity getUserByUserName(String userName)  {
+        User user = userService.getUserByName(userName);
+        return  ResponseEntity.ok(user);
+
+    }
+
+    /**
+     * 后台用户列表显示
+     *
+     * @return
+     */
+    @GetMapping(value = "/listUser")
+    public ResponseEntity userList()  {
 
         List<User> userList = userService.listUser();
-        modelandview.addObject("userList",userList);
 
-        modelandview.setViewName("Admin/User/index");
-        return modelandview;
+        return ResponseEntity.ok(userList);
 
     }
 
