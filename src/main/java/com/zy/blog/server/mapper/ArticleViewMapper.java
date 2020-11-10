@@ -17,6 +17,6 @@ import java.util.Map;
  */
 public interface ArticleViewMapper extends Mapper<ArticleView> {
 
-    @Select("select DATE_FORMAT(create_time,'%Y-%m-%d') days,count(id) count from article_view group by days ORDER BY  create_time desc LIMIT 0, 20 ")
+    @Select("select * from (  select DATE_FORMAT(create_time,'%Y-%m-%d') days,count(id) count from article_view group by days order by create_time desc limit 0, 20  ) a order by a.days asc ")
     List<Map> getArticleTongji();
 }
